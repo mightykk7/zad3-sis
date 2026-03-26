@@ -1,0 +1,50 @@
+﻿// zad3-sis.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
+//
+
+#include <iostream>
+
+struct People {
+    char FIO[80];
+    int birthyear;
+    char gender[10];
+    char familystatus[50];
+    bool isVoen;
+    char homeAddress[100];
+};
+
+int main()
+{
+    setlocale(0, "rus");
+    People peoples[8] = {
+        {"Иванов Иван Иванович",2004,"муж","женат",true,"ул. Ленина, д.15"},
+        {"Максимов Максим Максимович",2000,"муж","разведён",true,"ул. Пушкина, д.19"},
+        {"Иванова Мария Ивановна",1999,"жен","замужем",false,"ул. Ленина, д.15"},
+        {"Петрова Анастасия Сергеевна",2003,"жен","в браке не состояла ни разу",false,"ул. Ленина, д.30"},
+        {"Стрелкова Анна Андреевна",1998,"жен","разведена",false,"ул. Восточная, д.37"},
+        {"Ивницкая Диана Максимовна",1997,"жен","замужем",false,"ул. Восточная, д.37"},
+        {"Мезенцева Юлия Николаевна",1995,"жен","замужем",false,"ул. Восточная, д.37"},
+        {"Мезенцев Данил Витальевич",1993,"муж","женат",true,"ул. Восточная, д.37"},
+    };
+    People marriedwomen[8];
+    int count = 0;
+    for (int i = 0; i < 8; i++) {
+        if (strcmp(peoples[i].gender,"жен") == 0 && strcmp(peoples[i].familystatus, "замужем") ==0) {
+            marriedwomen[count] = peoples[i];
+            count++;
+        }
+    }
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - 1 - i; j++) {
+            if (marriedwomen[j].birthyear > marriedwomen[j+1].birthyear) {
+                People kopia = marriedwomen[j];
+                marriedwomen[j] = marriedwomen[j+1];
+                marriedwomen[j + 1] = kopia;
+            }
+        }
+    }
+    std::cout << "Упорядоченный по году рождения список женщин, которые состоят в браке.";
+    std::cout << std::endl;
+    for (int i = 0; i < count; i++) {
+        std::cout << "ФИО: " << marriedwomen[i].FIO <<" " << marriedwomen[i].birthyear << std::endl;
+    }
+}
